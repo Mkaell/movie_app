@@ -1,0 +1,22 @@
+@use "../../scss/"as *;
+
+
+.MuiAppBar-positionFixed {
+    background-color: transparent;
+}
+
+.css-11b3ww9-MuiPaper-root-MuiAppBar-root {
+    background-color: $body-bg;
+}
+
+.css-19r6kue-MuiContainer-root {
+    padding: 0 2rem
+}
+
+.css-1083xa6-MuiTypography-root {
+    font-size: 2rem;
+}
+
+header {
+    transition: all 0.5s ease !important;
+}

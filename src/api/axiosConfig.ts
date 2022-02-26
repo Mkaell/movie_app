@@ -5,13 +5,8 @@ import apiConfig from './apiConfig';
 
 const axiosConfig = axios.create({
     baseURL: apiConfig.baseUrl,
-    // headers: {
-    //     'Content-Type': 'application/json'
-    // },
     paramsSerializer: params => queryString.stringify({ ...params, api_key: apiConfig.apiKey })
 });
-
-// axiosConfig.interceptors.request.use(async (config) => config);
 
 
 axiosConfig.interceptors.response.use((response) => {
