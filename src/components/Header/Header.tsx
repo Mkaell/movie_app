@@ -115,7 +115,7 @@ const Header = (props: any) => {
                                 {
                                     headerNav.map((e, i) => (
                                         <MenuItem key={i} onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center">
+                                            <Typography textAlign="center" >
                                                 <Link to={e.path}>
                                                     {e.display}
                                                 </Link>
