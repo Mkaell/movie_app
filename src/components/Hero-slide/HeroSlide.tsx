@@ -9,6 +9,9 @@ import { MovieType } from '../../api/enumsTmdb';
 import apiConfig from '../../api/apiConfig';
 
 import './hero-slide.scss';
+import Button from '../button/Button';
+import { useNavigate } from 'react-router-dom';
+// import { Button } from '@mui/material';
 
 
 const HeroSlide = () => {
@@ -55,8 +58,8 @@ const HeroSlide = () => {
 
 const HeroSlideItem = (props: any) => {
 
-    const { item, className } = props
-
+    const { item, className } = props;
+    const navigate = useNavigate();
     // think about optimization
     const background = apiConfig.originalImage(item.backdrop_path ? item.backdrop_path : item.poster_path);
 
@@ -73,6 +76,11 @@ const HeroSlideItem = (props: any) => {
                 <div className="hero-slide__item__content__info">
                     <h2 className="title">{item.title}</h2>
                     <div className="overview">{item.overview}</div>
+                    <div className="btns">
+                        <Button onClick={() => navigate('/movie/' + item.id)}>
+                            Watch now
+                        </Button>
+                    </div>
                 </div>
 
             </div>

@@ -2,6 +2,7 @@ import axiosConfig from "./axiosConfig";
 import { Category, CategoryStrings, MovieType, MovieTypeStrings, TvType, TvTypeStrings } from "./enumsTmdb";
 
 
+
 const tmdbApi = {
     getMoviesList: (type: MovieTypeStrings, params: object) => {
         const url = 'movie/' + MovieType[type];
@@ -11,24 +12,26 @@ const tmdbApi = {
         const url = 'tv/' + TvType[type];
         return axiosConfig.get(url, params);
     },
-    getVideos: (cate: CategoryStrings, id: number) => {
-        const url = Category[cate] + '/' + id + '/videos';
+    // useParams
+    getVideos: (cate: string | undefined, id: number) => {
+        const url = cate + '/' + id + '/videos';
         return axiosConfig.get(url, { params: {} });
     },
-    search: (cate: CategoryStrings, params: object) => {
-        const url = 'search/' + Category[cate];
+    search: (cate: string | undefined, params: object) => {
+        const url = 'search/' + cate;
         return axiosConfig.get(url, params);
     },
-    detail: (cate: CategoryStrings, id: number, params: object) => {
-        const url = Category[cate] + '/' + id;
+    detail: (cate: string | undefined, id: string | undefined, params: object) => {
+        const url = cate + '/' + id;
         return axiosConfig.get(url, params);
     },
-    credits: (cate: CategoryStrings, id: number) => {
-        const url = Category[cate] + '/' + id + '/credits';
+    // useParams
+    credits: (cate: string | undefined, id: number) => {
+        const url = cate + '/' + id + '/credits';
         return axiosConfig.get(url, { params: {} });
     },
-    similar: (cate: CategoryStrings, id: number) => {
-        const url = Category[cate] + '/' + id + '/similar';
+    recommendations: (cate: CategoryStrings, id: number) => {
+        const url = Category[cate] + '/' + id + '/recommendations';
         return axiosConfig.get(url, { params: {} });
     },
 }

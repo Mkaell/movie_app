@@ -9,7 +9,7 @@
     border-radius: $border-radius;
     margin-bottom: 1rem;
 
-    .btn {
+    .icon-play {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -38,7 +38,7 @@
             opacity: 0.8;
         }
 
-        &:hover .btn {
+        &:hover .icon-play {
             transform: translate(-50%, -50%) scale(1);
         }
 
