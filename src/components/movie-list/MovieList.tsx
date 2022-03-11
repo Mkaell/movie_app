@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './movie-list.scss';
 
 import { SwiperSlide, Swiper } from 'swiper/react';
-import { Link } from 'react-router-dom';
+
 
 
 import { Category } from '../../api/enumsTmdb';
@@ -11,6 +11,7 @@ import tmdbApi from '../../api/apiTmdb';
 
 
 import MovieCard from './movie-card/MovieCard';
+
 
 const MovieList = (props: any) => {
 
@@ -37,7 +38,7 @@ const MovieList = (props: any) => {
 
         }
         getList();
-    }, []);
+    }, [props.category, props.id, props.type]);
 
 
     return (

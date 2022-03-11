@@ -11,11 +11,11 @@ import CastList from './CastList';
 import VideoList from './VideoList';
 
 import MovieList from '../../components/movie-list/MovieList';
+import Loader from '../../components/Loader/Loader';
 
 
 const DetailPage = () => {
     let { category, id } = useParams();
-
 
     const [item, setItem] = useState<any>();
 
@@ -27,11 +27,11 @@ const DetailPage = () => {
         }
         getDetail();
     }, [category, id]);
-    console.log(item);
+
     return (
         <>
             {
-                item && (
+                item ? (
                     <>
                         <div className="banner" style={{ backgroundImage: `url(${apiConfig.originalImage(item.backdrop_path || item.poster_path)})` }}></div>
                         <div className="mb-3 movie-content container">
@@ -94,7 +94,7 @@ const DetailPage = () => {
                             </div>
                         </div>
                     </>
-                )
+                ) : <Loader />
             }
         </>
     );

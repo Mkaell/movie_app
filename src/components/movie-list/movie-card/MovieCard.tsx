@@ -16,11 +16,16 @@ const MovieCard = (props: any) => {
 
     const link = '/' + Category[category] + '/' + item.id;
     let bg = '';
+
     if (item.poster_path || item.backdrop_path) {
         bg = apiConfig.w500Image(item.poster_path || item.backdrop_path);
     } else {
         bg = noBg
     }
+
+
+
+
 
 
     return (

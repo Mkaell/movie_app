@@ -1,9 +1,17 @@
-import React from 'react'
+import * as React from 'react';
 
-const LoginPage = () => {
+import { Form } from '../components/Form';
+import './LoginPage.scss'
+
+
+export default function LoginPage() {
+
+
     return (
-        <div>LoginPage</div>
-    )
-}
+        <div className='login'>
+            <Form title='Sign in' />
+        </div>
 
-export default LoginPage
+
+    );
+}

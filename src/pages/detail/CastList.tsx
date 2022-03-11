@@ -1,7 +1,6 @@
 import React, { useState, useEffect, FC } from 'react';
-
 import { useParams } from 'react-router';
-
+import noBg from '../../assets/no-poster-available.jpg'
 import tmdbApi from '../../api/apiTmdb';
 import apiConfig from '../../api/apiConfig';
 
@@ -11,6 +10,7 @@ interface ICastList {
 
 // посмотреть typescript
 const CastList: FC<ICastList> = (props: any) => {
+
 
     const { category } = useParams();
 
@@ -32,7 +32,7 @@ const CastList: FC<ICastList> = (props: any) => {
             {
                 casts.map((item, i) => (
                     <div key={i} className="casts__item">
-                        <div className="casts__item__img" style={{ backgroundImage: `url(${apiConfig.w500Image(item.profile_path)})` }}></div>
+                        <div className="casts__item__img" style={{ backgroundImage: `url(${item.profile_path ? apiConfig.w500Image(item.profile_path) : noBg})` }}></div>
                         <p className="casts__item__name">{item.name}</p>
                     </div>
                 ))
