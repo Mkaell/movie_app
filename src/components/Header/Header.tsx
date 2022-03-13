@@ -1,14 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import img from '../../assets/second_icon.png'
 import './header.scss';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { green, orange } from '@mui/material/colors';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
-
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { getAuth, signOut } from 'firebase/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
+import MovieFilterOutlinedIcon from '@mui/icons-material/MovieFilterOutlined';
+const settings = ['Profile', 'Logout'];
 const headerNav = [
     {
         display: 'Home',
@@ -22,10 +25,6 @@ const headerNav = [
         display: 'TV Series',
         path: '/tv'
     },
-    {
-        display: 'Sign in',
-        path: '/login'
-    }
 ];
 
 interface Props {
@@ -38,7 +37,7 @@ function ElevationScroll(props: Props) {
 
     const trigger = useScrollTrigger({
         disableHysteresis: true,
-        threshold: 0,
+        threshold: 10,
         target: window ? window() : undefined,
     });
 
@@ -50,6 +49,12 @@ function ElevationScroll(props: Props) {
 
 
 const Header = (props: any) => {
+
+    const navigate = useNavigate()
+    const auth = getAuth();
+    const [user, loading, error] = useAuthState(auth)
+    console.log(user);
+
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -64,12 +69,25 @@ const Header = (props: any) => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (e: any) => {
+
+        if (e.target.value === 'Logout') {
+            (async () => {
+
+                await signOut(auth)
+
+                navigate('/login')
+            })()
+
+        } else {
+            navigate('/profile')
+        }
         setAnchorElUser(null);
     };
 
 
     return (
+
         <ElevationScroll {...props}>
             <AppBar >
                 <Container maxWidth="xl">
@@ -80,7 +98,7 @@ const Header = (props: any) => {
                             component="div"
                             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                         >
-                            MovieApp
+                            <MovieFilterOutlinedIcon fontSize='large' color='primary' />
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -90,7 +108,7 @@ const Header = (props: any) => {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={handleOpenNavMenu}
-                                color="inherit"
+                                color='primary'
                             >
                                 <MenuIcon />
                             </IconButton>
@@ -131,7 +149,7 @@ const Header = (props: any) => {
                             component="div"
                             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                         >
-                            Movie App
+                            <MovieFilterOutlinedIcon fontSize='large' color='primary' />
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {headerNav.map((page, i) => (
@@ -148,11 +166,35 @@ const Header = (props: any) => {
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                                </IconButton>
-                            </Tooltip>
+                            {
+                                user ?
+                                    <Tooltip title="Open settings">
+                                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                            <Avatar alt="Remy Sharp" src={`${img}`} />
+                                        </IconButton>
+                                    </Tooltip> :
+                                    <Box textAlign="center" sx={{ display: 'flex' }}>
+                                        <Button
+                                            variant="outlined"
+                                            sx={{ my: 2, display: 'block' }}
+                                        >
+                                            <Link to='/registration'>
+                                                Sign up
+                                            </Link>
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+
+                                            sx={{ my: 2, display: 'block' }}
+                                        >
+                                            <Link to='/login'>
+                                                Log in
+                                            </Link>
+                                        </Button>
+
+                                    </Box>
+                            }
+
                             <Menu
                                 sx={{ mt: '45px' }}
                                 id="menu-appbar"
@@ -169,17 +211,26 @@ const Header = (props: any) => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
+                                {settings.map((setting, i) => (
+                                    <MenuItem key={setting}>
+                                        <Button
+                                            key={i}
+                                            onClick={handleCloseUserMenu}
+                                            value={setting}
+                                        >
+                                            {setting}
+                                        </Button>
                                     </MenuItem>
-                                ))}
+                                ))
+                                }
                             </Menu>
                         </Box>
                     </Toolbar>
                 </Container>
             </ AppBar>
-        </ElevationScroll>
+        </ElevationScroll >
+
+
 
     );
 }

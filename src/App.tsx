@@ -6,17 +6,28 @@ import './App.scss'
 import Navigation from './config/Navigation';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { StyledEngineProvider } from '@mui/material';
+import { createTheme, StyledEngineProvider } from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+import { orange } from '@mui/material/colors';
 
-
+const outerTheme = createTheme({
+    palette: {
+        primary: {
+            main: orange[500],
+        },
+    },
+});
 function App() {
     return (
         <BrowserRouter>
-            <StyledEngineProvider injectFirst>
-                <Header />
-            </StyledEngineProvider>
-            <Navigation />
-            <Footer />
+            <ThemeProvider theme={outerTheme}>
+                <StyledEngineProvider injectFirst>
+                    <Header />
+                </StyledEngineProvider>
+                <Navigation />
+                <Footer />
+            </ThemeProvider>
+
         </BrowserRouter>
 
     );

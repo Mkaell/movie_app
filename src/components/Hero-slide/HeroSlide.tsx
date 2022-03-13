@@ -9,9 +9,9 @@ import { MovieType } from '../../api/enumsTmdb';
 import apiConfig from '../../api/apiConfig';
 
 import './hero-slide.scss';
-import Button from '../button/Button';
+
 import { useNavigate } from 'react-router-dom';
-// import { Button } from '@mui/material';
+import { Button } from '@mui/material';
 
 
 const HeroSlide = () => {
@@ -77,7 +77,11 @@ const HeroSlideItem = (props: any) => {
                     <h2 className="title">{item.title}</h2>
                     <div className="overview">{item.overview}</div>
                     <div className="btns">
-                        <Button onClick={() => navigate('/movie/' + item.id)}>
+                        <Button
+                            onClick={() => navigate('/movie/' + item.id)}
+                            variant="contained"
+                            sx={{ my: 2, fontSize: '1.2rem' }}
+                        >
                             Watch now
                         </Button>
                     </div>

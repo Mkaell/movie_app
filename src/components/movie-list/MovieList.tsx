@@ -11,11 +11,12 @@ import tmdbApi from '../../api/apiTmdb';
 
 
 import MovieCard from './movie-card/MovieCard';
+import Loader from '../Loader/Loader';
 
 
-const MovieList = (props: any) => {
+const MovieList = (props?: any) => {
 
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState<any>();
 
     useEffect(() => {
         const getList = async () => {
@@ -48,12 +49,13 @@ const MovieList = (props: any) => {
                 spaceBetween={10}
                 slidesPerView={'auto'}
             >
-                {
-                    items.map((item, i) => (
+                {items ?
+                    items.map((item: any, i: React.Key | null | undefined) => (
                         <SwiperSlide key={i}>
                             <MovieCard item={item} category={props.category} />
                         </SwiperSlide>
-                    ))
+                    )) :
+                    <Loader />
                 }
             </Swiper>
         </div>

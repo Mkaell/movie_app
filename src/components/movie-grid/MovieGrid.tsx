@@ -4,11 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './movie-grid.scss';
 
 import MovieCard from '../movie-list/movie-card/MovieCard';
-import Button, { OutlineButton } from '../button/Button';
+import { Button } from '@mui/material';
 import Input from '../input/Input'
 
 import tmdbApi from '../../api/apiTmdb';
 import { Category, MovieType, TvType } from '../../api/enumsTmdb';
+import Loader from '../Loader/Loader';
 
 interface IMovieGrid {
     children?: React.ReactNode;
@@ -16,13 +17,13 @@ interface IMovieGrid {
 }
 const MovieGrid: FC<IMovieGrid> = (props) => {
 
-    const [items, setItems] = useState<any[]>([]);
+    const [items, setItems] = useState<any>(null);
 
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState(0);
 
     const { keyword } = useParams();
-    console.log(props.category);
+
 
     useEffect(() => {
         const getList = async () => {
@@ -74,22 +75,32 @@ const MovieGrid: FC<IMovieGrid> = (props) => {
     }
 
     return (
-        <>
+
+        <>{items ? <>
             <div className="section mb-3">
                 <MovieSearch category={props.category} keyword={keyword} />
             </div>
             <div className="movie-grid">
                 {
-                    items.map((item, i) => <MovieCard category={props.category} item={item} key={i} />)
+                    items.map((item: any, i: any) => <MovieCard category={props.category} item={item} key={i} />)
                 }
             </div>
             {
                 page < totalPage ? (
                     <div className="movie-grid__loadmore">
-                        <OutlineButton onClick={loadMore}>Load more</OutlineButton>
+                        <Button
+                            onClick={loadMore}
+                            variant="outlined"
+                            sx={{ my: 2, display: 'block' }}
+                        >
+                            Load more
+                        </Button>
+
                     </div>
                 ) : null
             }
+        </> : <Loader />}
+
         </>
     );
 }
@@ -138,7 +149,14 @@ const MovieSearch: FC<IMovieSearch> = (props) => {
                 value={keyword}
                 onChange={(e: { target: { value: any; }; }) => setKeyword(e.target.value)}
             />
-            <Button className="small" onClick={goToSearch}>Search</Button>
+            <Button
+                onClick={goToSearch}
+                variant="contained"
+                sx={{ borderRadius: '10px' }}
+            >
+                Load more
+            </Button>
+
         </div>
     )
 }

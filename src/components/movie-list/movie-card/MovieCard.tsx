@@ -23,11 +23,6 @@ const MovieCard = (props: any) => {
         bg = noBg
     }
 
-
-
-
-
-
     return (
         <Link to={link}>
             <div className="movie-card" style={{ backgroundImage: `url(${bg})` }}>

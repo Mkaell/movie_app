@@ -1,4 +1,4 @@
-@use "../../scss/variables" as *;
+@use "../../scss/variables"as *;
 
 .page-header {
     padding: $header-height 0 2rem;
@@ -7,7 +7,7 @@
 
     position: relative;
 
-    background-position: top;
+    background-position: -9px 2%;
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -22,7 +22,9 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 100px;
-        background-image: linear-gradient(to top, $body-bg, rgba($black, 0));
+        height: 100%;
+        background-image: linear-gradient(70deg, $body-bg, rgba($black, 0));
     }
+
+
 }
