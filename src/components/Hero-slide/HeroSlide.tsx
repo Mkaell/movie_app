@@ -80,9 +80,9 @@ const HeroSlideItem = (props: any) => {
                         <Button
                             onClick={() => navigate('/movie/' + item.id)}
                             variant="contained"
-                            sx={{ my: 2, fontSize: '1.2rem' }}
+                            sx={{ my: 2, fontSize: '1.2rem', borderRadius: '10px', fontFamily: 'Raleyway' }}
                         >
-                            Watch now
+                            Watch Now
                         </Button>
                     </div>
                 </div>

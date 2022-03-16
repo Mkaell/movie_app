@@ -1,25 +1,27 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
-
 import { useParams } from 'react-router';
-import { CategoryStrings } from '../../api/enumsTmdb';
 import tmdbApi from '../../api/apiTmdb';
 
-// посмотреть Typescript
+interface IVideoList {
+    id: number,
+    children?: React.ReactNode
+}
 
-const VideoList = (props: any) => {
+
+const VideoList: FC<IVideoList> = ({ id }): JSX.Element => {
 
     const { category } = useParams();
-
-    const [videos, setVideos] = useState([]);
+    const [videos, setVideos] = useState<object[]>([]);
 
     useEffect(() => {
         const getVideos = async () => {
-            const res: any = await tmdbApi.getVideos(category, props.id);
+            const res: any = await tmdbApi.getVideos(category, id);
+            console.log(res);
+
             setVideos(res.results.slice(0, 2));
         }
         getVideos();
-    }, [category, props.id]);
-    console.log(videos);
+    }, [category, id]);
 
     return (
         <>
@@ -32,11 +34,18 @@ const VideoList = (props: any) => {
         </>
     );
 }
+interface IVideoObject {
+    name?: string,
+    key?: number,
+    children?: React.ReactNode
+}
+interface IVideo {
+    key?: React.Key | null | undefined
+    item: IVideoObject,
+    children?: React.ReactNode
+}
 
-const Video = (props: any) => {
-
-    const item = props.item;
-    console.log(item);
+const Video: FC<IVideo> = ({ item }) => {
 
     const iframeRef: any = useRef(null);
 

@@ -1,0 +1,8 @@
+@use "../../scss/"as *;
+
+.footer {
+    @include flex(center, center);
+    width: 300px;
+    margin: 0 auto;
+
+}

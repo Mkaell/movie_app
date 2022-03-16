@@ -1,8 +1,25 @@
 @use "../../scss/"as *;
 
+.header-link {
+    padding: 1rem;
+    color: white
+}
 
 .MuiAppBar-positionFixed {
     background-color: transparent;
+}
+
+.css-6hp17o-MuiList-root-MuiMenu-list {
+    background-color: $body-bg;
+
+    button {
+        padding: 1.5rem;
+    }
+
+    li {
+        padding: 0rem;
+    }
+
 }
 
 .css-16bid9c-MuiPaper-root-MuiAppBar-root {
@@ -26,11 +43,13 @@ header {
     transition: all 0.5s ease !important;
 
     button {
-        padding: 0;
+        padding: 0px;
     }
 
     a {
         padding: 1rem;
-        font-family: 'Montserrat';
+        color: white
     }
+
+
 }

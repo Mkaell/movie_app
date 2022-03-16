@@ -13,8 +13,8 @@ const tmdbApi = {
         return axiosConfig.get(url, params);
     },
     // useParams
-    getVideos: (cate: string | undefined, id: number) => {
-        const url = cate + '/' + id + '/videos';
+    getVideos: (category: string | undefined, id: number) => {
+        const url = category + '/' + id + '/videos';
         return axiosConfig.get(url, { params: {} });
     },
     search: (cate: string | undefined, params: object) => {

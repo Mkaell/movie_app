@@ -23,16 +23,20 @@
 
     input {
         width: 100%;
-        padding-right: 8rem;
     }
 
     button {
         position: absolute;
         right: 0;
+        font-family: $font-family;
+
+        @include tablet {
+            border: none;
+
+        }
 
         @include mobile {
-            right: 1px;
-            top: 1px;
+            padding: 2px 10px;
         }
     }
 }

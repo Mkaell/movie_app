@@ -1,16 +1,16 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import img from '../../assets/second_icon.png'
-import './header.scss';
+import { getAuth, signOut } from 'firebase/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 import MenuIcon from '@mui/icons-material/Menu';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { green, orange } from '@mui/material/colors';
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
-import { getAuth, signOut } from 'firebase/auth';
-import { useAuthState } from "react-firebase-hooks/auth";
 import MovieFilterOutlinedIcon from '@mui/icons-material/MovieFilterOutlined';
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
+
+import img from '../../assets/second_icon.png'
+import './header.scss';
+
 const settings = ['Profile', 'Logout'];
 const headerNav = [
     {
@@ -46,14 +46,11 @@ function ElevationScroll(props: Props) {
     });
 }
 
-
-
 const Header = (props: any) => {
 
     const navigate = useNavigate()
     const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth)
-    console.log(user);
+    const [user] = useAuthState(auth)
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -69,7 +66,7 @@ const Header = (props: any) => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = (e: any) => {
+    const handleButtonUserMenu = (e: any) => {
 
         if (e.target.value === 'Logout') {
             (async () => {
@@ -82,6 +79,10 @@ const Header = (props: any) => {
         } else {
             navigate('/profile')
         }
+        setAnchorElUser(null);
+    };
+
+    const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
@@ -133,7 +134,7 @@ const Header = (props: any) => {
                                 {
                                     headerNav.map((e, i) => (
                                         <MenuItem key={i} onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center" >
+                                            <Typography className='header-link' textAlign="center" >
                                                 <Link to={e.path}>
                                                     {e.display}
                                                 </Link>
@@ -176,7 +177,7 @@ const Header = (props: any) => {
                                     <Box textAlign="center" sx={{ display: 'flex' }}>
                                         <Button
                                             variant="outlined"
-                                            sx={{ my: 2, display: 'block' }}
+                                            sx={{ my: 2, display: 'block', backgroundColor: 'rgba(255, 152, 0, 0.1)' }}
                                         >
                                             <Link to='/registration'>
                                                 Sign up
@@ -215,7 +216,7 @@ const Header = (props: any) => {
                                     <MenuItem key={setting}>
                                         <Button
                                             key={i}
-                                            onClick={handleCloseUserMenu}
+                                            onClick={handleButtonUserMenu}
                                             value={setting}
                                         >
                                             {setting}
@@ -229,9 +230,6 @@ const Header = (props: any) => {
                 </Container>
             </ AppBar>
         </ElevationScroll >
-
-
-
     );
 }
 

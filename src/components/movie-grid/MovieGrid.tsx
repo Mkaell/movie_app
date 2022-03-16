@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useCallback, FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import './movie-grid.scss';
-
-import MovieCard from '../movie-list/movie-card/MovieCard';
-import { Button } from '@mui/material';
 import Input from '../input/Input'
-
 import tmdbApi from '../../api/apiTmdb';
 import { Category, MovieType, TvType } from '../../api/enumsTmdb';
 import Loader from '../Loader/Loader';
 
+import { Search } from '@mui/icons-material';
+import MovieCard from '../movie-list/movie-card/MovieCard';
+import { Button } from '@mui/material';
+
+import './movie-grid.scss';
 interface IMovieGrid {
     children?: React.ReactNode;
     category?: string;
 }
+
 const MovieGrid: FC<IMovieGrid> = (props) => {
 
     const [items, setItems] = useState<any>(null);
-
-    const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState(0);
+    const [page, setPage] = useState<number>(1);
+    const [totalPage, setTotalPage] = useState<number>(0);
 
     const { keyword } = useParams();
 
@@ -49,7 +49,7 @@ const MovieGrid: FC<IMovieGrid> = (props) => {
         }
         getList();
     }, [props.category, keyword]);
-    // console.log(items);
+
     const loadMore = async () => {
         let response: any = null;
         if (keyword === undefined) {
@@ -75,31 +75,31 @@ const MovieGrid: FC<IMovieGrid> = (props) => {
     }
 
     return (
-
-        <>{items ? <>
-            <div className="section mb-3">
-                <MovieSearch category={props.category} keyword={keyword} />
-            </div>
-            <div className="movie-grid">
+        <>
+            {items ? <>
+                <div className="section mb-3">
+                    <MovieSearch category={props.category} keyword={keyword} />
+                </div>
+                <div className="movie-grid">
+                    {
+                        items.map((item: any, i: any) => <MovieCard category={props.category} item={item} key={i} />)
+                    }
+                </div>
                 {
-                    items.map((item: any, i: any) => <MovieCard category={props.category} item={item} key={i} />)
-                }
-            </div>
-            {
-                page < totalPage ? (
-                    <div className="movie-grid__loadmore">
-                        <Button
-                            onClick={loadMore}
-                            variant="outlined"
-                            sx={{ my: 2, display: 'block' }}
-                        >
-                            Load more
-                        </Button>
+                    page < totalPage ? (
+                        <div className="movie-grid__loadmore">
+                            <Button
+                                onClick={loadMore}
+                                variant="outlined"
+                                sx={{ my: 2, mx: 'auto', display: 'block' }}
+                            >
+                                Load more
+                            </Button>
 
-                    </div>
-                ) : null
-            }
-        </> : <Loader />}
+                        </div>
+                    ) : null
+                }
+            </> : <Loader />}
 
         </>
     );
@@ -152,11 +152,11 @@ const MovieSearch: FC<IMovieSearch> = (props) => {
             <Button
                 onClick={goToSearch}
                 variant="contained"
-                sx={{ borderRadius: '10px' }}
+                sx={{ borderRadius: '10px', border: '1px solid #ff9800' }}
+                startIcon={<Search />}
             >
-                Load more
+                Search
             </Button>
-
         </div>
     )
 }
