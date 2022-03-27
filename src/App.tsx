@@ -27,12 +27,11 @@ export const UserContext = React.createContext(auth);
 
 function App() {
 
-    // const [user, loading, error] = useAuthState(auth);
-    // console.log('renderA')
+    const [user, loading, error] = useAuthState(auth);
 
-    // if (loading) {
-    //     return <Loader />
-    // }
+    if (loading) {
+        return <Loader />
+    }
 
     return (
         <BrowserRouter>
