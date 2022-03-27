@@ -21,26 +21,30 @@ const outerTheme = createTheme({
         },
     },
 });
+
+const auth = getAuth();
+export const UserContext = React.createContext(auth);
+
 function App() {
-    const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
-    if (loading) {
-        return <Loader />
-    }
+
+    // const [user, loading, error] = useAuthState(auth);
+    // console.log('renderA')
+
+    // if (loading) {
+    //     return <Loader />
+    // }
 
     return (
         <BrowserRouter>
-
-            <ThemeProvider theme={outerTheme}>
-                <StyledEngineProvider injectFirst>
-                    <Header />
-                </StyledEngineProvider>
-                <Navigation />
-                <Footer />
-            </ThemeProvider>
-
+            <UserContext.Provider value={auth}>
+                <ThemeProvider theme={outerTheme}>
+                    <StyledEngineProvider injectFirst>
+                        <Header />
+                    </StyledEngineProvider>
+                    <Navigation />
+                </ThemeProvider>
+            </UserContext.Provider>
         </BrowserRouter>
-
     );
 }
 

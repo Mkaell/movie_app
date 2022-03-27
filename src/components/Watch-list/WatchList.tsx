@@ -1,16 +1,20 @@
 import { getAuth } from 'firebase/auth'
 import { doc, getDoc } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { SwiperSlide, Swiper } from 'swiper/react';
+import { UserContext } from '../../App';
 import { db } from '../../firebase'
 import MovieCard from '../movie-list/movie-card/MovieCard'
 
-const WatchList = () => {
-    const auth = getAuth();
-    const [user, loading, error] = useAuthState(auth);
+const WatchList: FC = () => {
+
+    const { currentUser } = useContext(UserContext);
+
     const [items, setItems] = useState<any>([]);
-    const docuRef = doc(db, `MOVIE_DATABASE/${user?.email}`);
+
+    const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
+
     useEffect(() => {
         (async () => {
             // поисковый документ
@@ -24,6 +28,7 @@ const WatchList = () => {
         })()
 
     }, [])
+
     return (
         <div className="movie-list">
             <Swiper

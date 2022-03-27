@@ -1,66 +1,108 @@
-import * as React from 'react';
+
+import { FC, useContext, useState } from 'react';
+import { AlertModal } from '../components/Alert';
+import { UserContext } from '../App';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Form } from '../components/Form';
-import './LoginPage.scss'
 import { ParticlesBackground } from '../components/Particles';
 
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+
+import './LoginPage.scss'
 
 
-const LoginPage = () => {
-    const navigate = useNavigate()
-    const auth = getAuth();
 
-    const handleLogin = async (email: any, password: any) => {
+const LoginPage: FC = () => {
+
+    const navigate = useNavigate();
+
+    const auth = useContext(UserContext);
+
+    const [open, setOpen] = useState<boolean>(false);
+    const [valueModal, setValueModal] = useState<string>('');
+    const [errorEmail, setErrorEmail] = useState('')
+    const [errorPassword, setErrorPassword] = useState('')
+
+
+    const clearError = () => {
+        setErrorEmail('')
+        setErrorPassword('')
+    }
+
+    const handleClose = (reason?: string) => {
+
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+    const handleLogin = async (email: string, password: string) => {
+
+        clearError()
         await signInWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
-                console.log(user);
 
-                // dispatch(fetchingstart({
-                //     email: user.email,
-                //     token: user.accessToken,
-                //     id: user.uid
-                // }))
                 navigate('/');
             })
-            .catch(error => alert(error.message))
+            .catch(error => {
+
+                switch (error.code) {
+                    case "auth/invalid-email":
+                        setErrorEmail('Email address is not valid.');
+                        break;
+                    case "auth/user-disabled":
+                        setErrorEmail('There is no user corresponding to the given email.');
+                        break;
+                    case "auth/user-not-found":
+                    case "auth/wrong-password":
+                        setValueModal('Invalid email or password!');
+                        setErrorEmail('Email or password address is not valid.');
+                        setErrorPassword('Email or password address is not valid.');
+                        setOpen(true)
+                        break;
+                    case "auth/internal-error":
+                        setErrorPassword('This field is required')
+                        break;
+                    default:
+                        setValueModal(error.message);
+                        setOpen(true)
+                        break;
+                }
+
+            })
     }
 
     const handleLoginGoogle = async () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                // const credential = GoogleAuthProvider.credentialFromResult(result);
-                // const token = credential?.accessToken;
-                // The signed-in user info.
-                // const user = result.user;
-                // ...
+
                 navigate('/');
             }).catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(`${errorCode}: ${errorMessage}`);
 
-                // The email of the user's account used.
-                // const email = error.email;
-                // // The AuthCredential type that was used.
-                // const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
+                const errorMessage = error.message;
+                setOpen(true);
+                setErrorEmail(errorMessage)
+
             });
     }
 
     return (
         <>
+            <AlertModal open={open} handleClose={handleClose} children={valueModal} severity='error' />
             <ParticlesBackground />
             <div>
+
                 <div className="login-container">
                     <Form
+                        errorPassword={errorPassword}
+                        errorEmail={errorEmail}
                         title='Log in'
                         handleClick={handleLogin}
                         handleLoginGoogle={handleLoginGoogle} />
-                    <p>
+                    <p style={{ textAlign: 'center' }}>
                         Don't have an account?
                         <Link
                             to='/registration'
@@ -70,6 +112,7 @@ const LoginPage = () => {
                     </p>
                 </div>
             </div>
+
         </>
 
 

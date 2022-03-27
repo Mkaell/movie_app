@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Form } from '../components/Form';
 import { ParticlesBackground } from '../components/Particles';
@@ -6,61 +6,92 @@ import { ParticlesBackground } from '../components/Particles';
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 import './LoginPage.scss'
+import { AlertModal } from '../components/Alert';
+import { UserContext } from '../App';
 
 const RegisterPage: FC = () => {
 
     const navigate = useNavigate()
-    const auth = getAuth();
+
+    const auth = useContext(UserContext);
+
+    const [errorEmail, setErrorEmail] = useState('')
+    const [errorPassword, setErrorPassword] = useState('')
+    const [open, setOpen] = useState<boolean>(false);
+    const [valueModal, setValueModal] = useState<string>('');
+
+    const handleClose = (reason?: string) => {
+
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const handleRegister = (email: any, password: any) => {
 
         createUserWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
-
-                // localStorage.setItem('user', JSON.stringify(user.uid));
-                // dispatch(fetchingstart({
-                //     email: user.email,
-                //     token: user.accessToken,
-                //     id: user.uid
-                // }))
                 navigate('/');
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+
+                switch (error.code) {
+                    case "auth/invalid-email":
+                        setErrorEmail('Email address is not valid.');
+                        break;
+                    case "auth/email-already-in-use":
+                        setErrorEmail('There already exists an account with the given email address.');
+                        break;
+                    case "auth/weak-password":
+                        setErrorPassword('Password should be at least 6 characters');
+                        break;
+                    case "auth/internal-error":
+                        setErrorPassword('This field is required')
+                        break;
+                    default:
+                        setValueModal(error.message);
+                        setOpen(true)
+                        break;
+                }
+
+            })
     }
 
     const handleLoginGoogle = async () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                // const credential = GoogleAuthProvider.credentialFromResult(result);
-                // const token = credential?.accessToken;
-                // The signed-in user info.
-                // const user = result.user;
-                // ...
+
                 navigate('/');
             }).catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(`${errorCode}: ${errorMessage}`);
 
-                // The email of the user's account used.
-                // const email = error.email;
-                // // The AuthCredential type that was used.
-                // const credential = GoogleAuthProvider.credentialFromError(error);
-                // ...
+                setValueModal(error.message);
+                setOpen(true);
+
             });
     }
 
     return (
         <>
+            <AlertModal open={open} handleClose={handleClose} children={valueModal} severity='error' />
             <ParticlesBackground />
-            <div className='login'>
+            <div>
                 <div className='login-container'>
-                    <Form title='Sign up' handleClick={handleRegister} handleLoginGoogle={handleLoginGoogle} />
-                    <p>
-                        Already have account? <Link to='/login' style={{ borderBottom: ' 1px solid #ff9800', padding: '0.5rem' }}> Log in</Link>
+                    <Form
+                        errorPassword={errorPassword}
+                        errorEmail={errorEmail}
+                        title='Sign up'
+                        handleClick={handleRegister}
+                        handleLoginGoogle={handleLoginGoogle} />
+                    <p style={{ textAlign: 'center' }}>
+                        Already have account?
+                        <Link
+                            to='/login'
+                            style={{ borderBottom: ' 1px solid #ff9800', padding: '0.5rem' }}>
+                            Log in
+                        </Link>
                     </p>
                 </div>
             </div >

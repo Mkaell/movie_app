@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Input from '../input/Input'
+import { Input } from '../input';
 import tmdbApi from '../../api/apiTmdb';
 import { Category, MovieType, TvType } from '../../api/enumsTmdb';
 import Loader from '../Loader/Loader';
@@ -11,6 +11,7 @@ import MovieCard from '../movie-list/movie-card/MovieCard';
 import { Button } from '@mui/material';
 
 import './movie-grid.scss';
+
 interface IMovieGrid {
     children?: React.ReactNode;
     category?: string;
@@ -129,17 +130,21 @@ const MovieSearch: FC<IMovieSearch> = (props) => {
     );
 
     useEffect(() => {
+
         const enterEvent = (e: { preventDefault: () => void; keyCode: number; }) => {
             e.preventDefault();
             if (e.keyCode === 13) {
                 goToSearch();
             }
         }
+
         document.addEventListener('keyup', enterEvent);
+
         return () => {
             document.removeEventListener('keyup', enterEvent);
         };
-    }, [keyword, goToSearch]);
+
+    }, [goToSearch]);
 
     return (
         <div className="movie-search">

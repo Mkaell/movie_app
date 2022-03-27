@@ -13,14 +13,13 @@ const CastList: FC<ICastList> = (props: any) => {
 
 
     const { category } = useParams();
-
     const [casts, setCasts] = useState<any[]>([]);
 
     useEffect(() => {
         const getCredits = async () => {
             const res: any = await tmdbApi.credits(category, props.id);
             setCasts(res.cast.slice(0, 5));
-            console.log(res);
+
         }
         getCredits();
 

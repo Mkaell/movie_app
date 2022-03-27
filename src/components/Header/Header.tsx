@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -10,8 +10,10 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 
 import img from '../../assets/second_icon.png'
 import './header.scss';
+import { UserContext } from '../../App';
 
 const settings = ['Profile', 'Logout'];
+
 const headerNav = [
     {
         display: 'Home',
@@ -49,7 +51,9 @@ function ElevationScroll(props: Props) {
 const Header = (props: any) => {
 
     const navigate = useNavigate()
-    const auth = getAuth();
+    const { pathname } = useLocation();
+
+    const auth = useContext(UserContext);
     const [user] = useAuthState(auth)
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -85,7 +89,6 @@ const Header = (props: any) => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
 
     return (
 
@@ -174,26 +177,44 @@ const Header = (props: any) => {
                                             <Avatar alt="Remy Sharp" src={`${img}`} />
                                         </IconButton>
                                     </Tooltip> :
-                                    <Box textAlign="center" sx={{ display: 'flex' }}>
-                                        <Button
-                                            variant="outlined"
-                                            sx={{ my: 2, display: 'block', backgroundColor: 'rgba(255, 152, 0, 0.1)' }}
-                                        >
-                                            <Link to='/registration'>
-                                                Sign up
-                                            </Link>
-                                        </Button>
-                                        <Button
-                                            variant="contained"
-
-                                            sx={{ my: 2, display: 'block' }}
-                                        >
-                                            <Link to='/login'>
-                                                Log in
-                                            </Link>
-                                        </Button>
-
-                                    </Box>
+                                    pathname === '/registration' ?
+                                        <Box textAlign="center" sx={{ display: 'flex' }}>
+                                            <Button
+                                                variant="contained"
+                                                sx={{ my: 2, display: 'block', padding: '0', width: '7rem', height: '2rem' }}
+                                            >
+                                                <Link to='/registration' style={{ width: '100%' }}>
+                                                    Sign up
+                                                </Link>
+                                            </Button>
+                                            <Button
+                                                variant="outlined"
+                                                sx={{ my: 2, display: 'block', padding: '0', width: '7rem', height: '2rem' }}
+                                            >
+                                                <Link to='/login' style={{ width: '100%' }}>
+                                                    Log in
+                                                </Link>
+                                            </Button>
+                                        </Box>
+                                        :
+                                        <Box textAlign="center" sx={{ display: 'flex' }}>
+                                            <Button
+                                                variant="outlined"
+                                                sx={{ my: 2, display: 'block', backgroundColor: 'rgba(255, 152, 0, 0.1)', padding: '0', width: '7rem', height: '2rem' }}
+                                            >
+                                                <Link to='/registration' style={{ width: '100%' }}>
+                                                    Sign up
+                                                </Link>
+                                            </Button>
+                                            <Button
+                                                variant="contained"
+                                                sx={{ my: 2, display: 'block', padding: '0', width: '7rem', height: '2rem' }}
+                                            >
+                                                <Link to='/login' style={{ width: '100%' }}>
+                                                    Log in
+                                                </Link>
+                                            </Button>
+                                        </Box>
                             }
 
                             <Menu

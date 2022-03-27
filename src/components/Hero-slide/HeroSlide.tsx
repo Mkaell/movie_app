@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 
 import SwiperCore, { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,13 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 
-const HeroSlide = () => {
+const HeroSlide: FC = () => {
 
     SwiperCore.use([Autoplay]);
 
     const [movieItems, setMovieItems] = useState([]);
 
     useEffect(() => {
+
         const getMovies = async () => {
             const params = { page: 1 }
             try {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import CatalogPage from '../pages/CatalogPage';
 import DetailPage from '../pages/detail/DetailPage';
@@ -8,6 +8,10 @@ import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
 
 const Navigation = () => {
+    useEffect(() => {
+        console.log('nav');
+
+    })
     return (
         <Routes>
             <Route

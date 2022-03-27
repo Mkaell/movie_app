@@ -16,7 +16,6 @@ const VideoList: FC<IVideoList> = ({ id }): JSX.Element => {
     useEffect(() => {
         const getVideos = async () => {
             const res: any = await tmdbApi.getVideos(category, id);
-            console.log(res);
 
             setVideos(res.results.slice(0, 2));
         }
@@ -50,7 +49,7 @@ const Video: FC<IVideo> = ({ item }) => {
     const iframeRef: any = useRef(null);
 
     useEffect(() => {
-        const height = iframeRef.current.offsetWidth * 9 / 16 + 'px';
+        const height = iframeRef.current.offsetWidth * 6 / 16 + 'px';
         iframeRef.current.setAttribute('height', height);
     }, []);
 

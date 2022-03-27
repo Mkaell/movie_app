@@ -29,7 +29,7 @@ const MovieCard = (props: any) => {
                 <PlayCircleIcon className='icon-play' sx={{ fontSize: '4rem' }} />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column', textAlign: 'center' }}>
-                {item.vote_average ? <div style={{ display: 'flex', alignItems: 'center', padding: '5px', fontFamily: 'Roboto' }}>{item.vote_average}<StarIcon color='warning' /></div> : null}
+                {item.vote_average ? <div style={{ display: 'flex', alignItems: 'center', padding: '5px', fontFamily: 'Roboto' }}>{item.vote_average.toFixed(1)}<StarIcon color='warning' /></div> : null}
                 <h3>{item.title || item.name}</h3>
             </div>
         </Link>

@@ -1,13 +1,14 @@
-import React, { FC } from 'react'
-import HeroSlide from '../components/Hero-slide/HeroSlide'
+import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import MovieList from '../components/movie-list/MovieList'
 import { Category, MovieType, TvType } from '../api/enumsTmdb'
-import { Link } from 'react-router-dom'
+import { Footer } from '../components/Footer'
+import { HeroSlide } from '../components/Hero-slide'
+
 import { Button } from '@mui/material'
-// import { OutlineButton } from '../components/button/Button'
+
 
 const HomePage: FC = () => {
-
 
     return (
         <>
@@ -72,6 +73,7 @@ const HomePage: FC = () => {
                     </div>
                     <MovieList category={Category.tv} type={TvType.top_rated} />
                 </div>
+                <Footer />
             </div>
         </>
     )
