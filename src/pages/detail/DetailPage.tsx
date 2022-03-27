@@ -37,7 +37,7 @@ const DetailPage: FC = () => {
     const [item, setItem] = useState<any>();
     const [data, setData] = useState<any>();
 
-    const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
+
 
     const handleClose = (reason?: string) => {
 
@@ -58,14 +58,17 @@ const DetailPage: FC = () => {
     useEffect(() => {
 
         const getDetail = async () => {
-
-            // adding a database when opening
-            const data = await getDoc(docuRef);
-            setData(data);
-            // check if it exists
-            if (!data.exists()) {
-                await setDoc(docuRef, { watchList: [] });
+            if (currentUser) {
+                const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
+                // adding a database when opening
+                const data = await getDoc(docuRef);
+                setData(data);
+                // check if it exists
+                if (!data.exists()) {
+                    await setDoc(docuRef, { watchList: [] });
+                }
             }
+
 
             const response: any = await tmdbApi.detail(category, id, { params: {} });
             setItem(response);
@@ -83,7 +86,7 @@ const DetailPage: FC = () => {
         const isMovieInWatchList = async () => {
 
             try {
-
+                const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
                 const data = await getDoc(docuRef);
 
                 const filterlist = data.data()?.watchList.filter(
@@ -113,6 +116,7 @@ const DetailPage: FC = () => {
     const addMovie = async () => {
 
         try {
+            const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
             item.category = category
             await updateDoc(docuRef, {
                 watchList: arrayUnion(item)
@@ -128,7 +132,7 @@ const DetailPage: FC = () => {
 
     const deleteMovie = async () => {
         try {
-
+            const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
             const data = await getDoc(docuRef);
 
             const filterList = data.data()?.watchList.filter(
@@ -147,106 +151,107 @@ const DetailPage: FC = () => {
     return (
         <>
             {
-                item && data ? (
-                    <>
-                        <div
-                            className="banner"
-                            style={{ backgroundImage: `url(${apiConfig.originalImage(item.backdrop_path || item.poster_path)})` }}>
-                        </div>
-                        <div className="mb-3 movie-content container">
-                            <div className="movie-content__poster">
-                                <div
-                                    className="movie-content__poster__img"
-                                    style={{ backgroundImage: `url(${apiConfig.originalImage(item.poster_path || item.backdrop_path)})` }}>
-                                </div>
+                currentUser ? (item && data) : item
+                    ? (
+                        <>
+                            <div
+                                className="banner"
+                                style={{ backgroundImage: `url(${apiConfig.originalImage(item.backdrop_path || item.poster_path)})` }}>
                             </div>
-                            <div className="movie-content__info">
-                                <div
-                                    className="movie-content__info-title"
-                                >
-                                    <h2>
-                                        {item.title || item.name}
-                                    </h2>
-                                    <div className='movie-content__vote'>
-                                        <p style={{
-                                            fontSize: '2.5rem',
-                                            fontFamily: 'Montserrat'
-                                        }}>{item.vote_average}</p>
+                            <div className="mb-3 movie-content container">
+                                <div className="movie-content__poster">
+                                    <div
+                                        className="movie-content__poster__img"
+                                        style={{ backgroundImage: `url(${apiConfig.originalImage(item.poster_path || item.backdrop_path)})` }}>
                                     </div>
                                 </div>
-                                <div className="genres">
+                                <div className="movie-content__info">
+                                    <div
+                                        className="movie-content__info-title"
+                                    >
+                                        <h2>
+                                            {item.title || item.name}
+                                        </h2>
+                                        <div className='movie-content__vote'>
+                                            <p style={{
+                                                fontSize: '2.5rem',
+                                                fontFamily: 'Montserrat'
+                                            }}>{item.vote_average}</p>
+                                        </div>
+                                    </div>
+                                    <div className="genres">
+                                        {
+                                            item.genres && item.genres.slice(0, 4).map((genre: { name: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }, i: React.Key | null | undefined) => (
+                                                <span key={i} className="genres__item">{genre.name}</span>
+                                            ))
+                                        }
+                                    </div>
+                                    <p>{item.overview}</p>
+
                                     {
-                                        item.genres && item.genres.slice(0, 4).map((genre: { name: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }, i: React.Key | null | undefined) => (
-                                            <span key={i} className="genres__item">{genre.name}</span>
-                                        ))
+                                        currentUser ?
+                                            visibility ?
+                                                <Button color='success' sx={{ mb: '2rem' }} variant="contained" startIcon={<Add />} onClick={addMovie}>
+                                                    Add to Watch List
+                                                </Button> :
+                                                <Button color='error' sx={{ mb: '2rem' }} variant="contained" startIcon={<Remove />} onClick={deleteMovie}>
+                                                    Delete to Watch List
+                                                </Button>
+                                            : null
                                     }
-                                </div>
-                                <p>{item.overview}</p>
 
-                                {
-                                    currentUser ?
-                                        visibility ?
-                                            <Button color='success' sx={{ mb: '2rem' }} variant="contained" startIcon={<Add />} onClick={addMovie}>
-                                                Add to Watch List
-                                            </Button> :
-                                            <Button color='error' sx={{ mb: '2rem' }} variant="contained" startIcon={<Remove />} onClick={deleteMovie}>
-                                                Delete to Watch List
-                                            </Button>
-                                        : null
-                                }
+                                    {
+                                        item.release_date &&
+                                        <InfoList icon={<DateRangeIcon />} title='Release date: ' info={item.release_date} />
+                                    }
 
-                                {
-                                    item.release_date &&
-                                    <InfoList icon={<DateRangeIcon />} title='Release date: ' info={item.release_date} />
-                                }
+                                    {
+                                        item.runtime &&
+                                        <InfoList icon={<ShutterSpeedIcon />} title='Duration: ' info={item.runtime} />
+                                    }
 
-                                {
-                                    item.runtime &&
-                                    <InfoList icon={<ShutterSpeedIcon />} title='Duration: ' info={item.runtime} />
-                                }
+                                    {
+                                        item.budget ?
+                                            <InfoList icon={<PaidIcon />} title='Budget: $' info={item.budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} /> : null
+                                    }
 
-                                {
-                                    item.budget ?
-                                        <InfoList icon={<PaidIcon />} title='Budget: $' info={item.budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} /> : null
-                                }
+                                    {
+                                        item.first_air_date && item.last_air_date ?
+                                            <InfoList icon={<DateRangeIcon />} info={`${item.first_air_date} - ${item.last_air_date}`} /> : null
+                                    }
 
-                                {
-                                    item.first_air_date && item.last_air_date ?
-                                        <InfoList icon={<DateRangeIcon />} info={`${item.first_air_date} - ${item.last_air_date}`} /> : null
-                                }
+                                    {
+                                        item.number_of_episodes &&
+                                        <InfoList title='Number of episodes: ' info={item.number_of_episodes} />
+                                    }
 
-                                {
-                                    item.number_of_episodes &&
-                                    <InfoList title='Number of episodes: ' info={item.number_of_episodes} />
-                                }
+                                    {
+                                        item.number_of_seasons &&
+                                        <InfoList title='Number of seasons: ' info={item.number_of_seasons} />
+                                    }
 
-                                {
-                                    item.number_of_seasons &&
-                                    <InfoList title='Number of seasons: ' info={item.number_of_seasons} />
-                                }
-
-                                <div className="cast">
-                                    <div className="section__header">
-                                        <h2>Casts</h2>
+                                    <div className="cast">
+                                        <div className="section__header">
+                                            <h2>Casts</h2>
+                                        </div>
+                                        <CastList id={item.id} />
                                     </div>
-                                    <CastList id={item.id} />
                                 </div>
                             </div>
-                        </div>
-                        <div className="container">
-                            <div className="section mb-3">
-                                <VideoList id={item.id} />
-                            </div>
-                            <div className="section mb-3">
-                                <div className="section__header mb-2">
-                                    <h2>Recommendations</h2>
+                            <div className="container">
+                                <div className="section mb-3">
+                                    <VideoList id={item.id} />
                                 </div>
-                                <MovieList category={category} type="recommendations" id={item.id} />
+                                <div className="section mb-3">
+                                    <div className="section__header mb-2">
+                                        <h2>Recommendations</h2>
+                                    </div>
+                                    <MovieList category={category} type="recommendations" id={item.id} />
+                                </div>
                             </div>
-                        </div>
-                        <AlertModal open={open} handleClose={handleClose} children={valueModal} severity={alertModal} />
-                    </>
-                ) : <Loader />
+                            <AlertModal open={open} handleClose={handleClose} children={valueModal} severity={alertModal} />
+                        </>
+                    ) : <Loader />
             }
         </>
     );
