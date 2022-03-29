@@ -25,9 +25,11 @@ const outerTheme = createTheme({
 const auth = getAuth();
 export const UserContext = React.createContext(auth);
 
+
 function App() {
 
     const [user, loading, error] = useAuthState(auth);
+
 
     if (loading) {
         return <Loader />

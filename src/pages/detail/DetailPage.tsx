@@ -7,6 +7,8 @@ import Loader from '../../components/Loader/Loader';
 import tmdbApi from '../../api/apiTmdb';
 import apiConfig from '../../api/apiConfig';
 import { AlertModal } from '../../components/Alert';
+import { UserContext } from '../../App';
+import InfoList from './InfoList';
 
 import PaidIcon from '@mui/icons-material/Paid';
 import DateRangeIcon from '@mui/icons-material/DateRange';
@@ -17,10 +19,7 @@ import { Add, Remove } from '@mui/icons-material';
 import { setDoc, doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase'
 
-
 import './detail.scss';
-import { UserContext } from '../../App';
-import InfoList from './InfoList';
 
 type IModalColor = AlertColor | undefined
 
@@ -44,6 +43,11 @@ const DetailPage: FC = () => {
         }
         setOpen(false);
     };
+
+    useEffect(() => {
+        console.log(visibility);
+
+    })
 
     const changeStatesButton = (visibility: boolean, valueModal: string, coloModal: IModalColor, open: boolean) => {
 
@@ -78,7 +82,7 @@ const DetailPage: FC = () => {
 
     }, [category, currentUser, id]);
 
-    // need attention 
+
     useEffect(() => {
 
         const isMovieInWatchList = async () => {
