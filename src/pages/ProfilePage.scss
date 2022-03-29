@@ -62,6 +62,10 @@
         padding-left: 2rem;
         position: relative;
 
+        p {
+            font-family: 'Montserrat';
+        }
+
         @include mobile {
             width: 100%;
             padding-left: 0;

@@ -5,7 +5,8 @@ const Footer = () => {
     return (
 
         <div className='footer'>
-            © 2022, made with<Favorite />  by <a href='https://github.com/Mkaell'> Mkaell</a>
+            © 2022, made with <Favorite sx={{ margin: '0 2px', color: 'red' }} /> by
+            <a href='https://github.com/Mkaell' style={{ marginLeft: '2px' }}> Mkaell</a>
         </div>
 
     )

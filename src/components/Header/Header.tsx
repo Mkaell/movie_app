@@ -1,16 +1,16 @@
 import React, { useContext } from 'react'
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getAuth, signOut } from 'firebase/auth';
-import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import MovieFilterOutlinedIcon from '@mui/icons-material/MovieFilterOutlined';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 
+import { UserContext } from '../../App';
 import img from '../../assets/second_icon.png'
 import './header.scss';
-import { UserContext } from '../../App';
+
 
 const settings = ['Profile', 'Logout'];
 

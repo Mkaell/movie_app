@@ -1,18 +1,17 @@
 import React from 'react';
+import './App.scss'
 import 'swiper/swiper.min.css'
 import { BrowserRouter } from 'react-router-dom';
-import './App.scss'
-
+import Loader from './components/Loader/Loader';
 import Navigation from './config/Navigation';
-import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+
 import { createTheme, StyledEngineProvider } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import { orange } from '@mui/material/colors';
+
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth } from 'firebase/auth';
-import Loader from './components/Loader/Loader';
-
 
 const outerTheme = createTheme({
     palette: {
