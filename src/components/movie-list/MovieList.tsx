@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Category } from '../../api/enumsTmdb';
 import tmdbApi from '../../api/apiTmdb';
 import MovieCard from './movie-card/MovieCard';
-import Loader from '../Loader/Loader';
+
 
 import { SwiperSlide, Swiper } from 'swiper/react';
 

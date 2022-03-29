@@ -21,8 +21,18 @@ export default function AlertModal(props: IAlertModal) {
 
     return (
         <>
-            <Snackbar open={props.open} autoHideDuration={3000} onClose={props.handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                <Alert color={props.severity} onClose={props.handleClose} severity={props.severity} sx={{ width: '100%' }}>
+            <Snackbar
+                open={props.open}
+                autoHideDuration={3000}
+                onClose={props.handleClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert
+                    color={props.severity}
+                    onClose={props.handleClose}
+                    severity={props.severity}
+                    sx={{ width: '100%', alignItems: 'center' }}
+                >
                     {props.children}
                 </Alert>
             </Snackbar>

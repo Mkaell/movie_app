@@ -39,13 +39,9 @@ const Form: FC<IForm> = ({ title, handleClick, handleLoginGoogle, errorEmail, er
                 />
                 {errorPassword && <p className='error-password'>{errorPassword}</p>}
                 <Button
-                    onClick={() => {
-
-                        handleClick(email, pass)
-                    }
-                    }
+                    onClick={() => handleClick(email, pass)}
                     variant="contained"
-                    sx={{ width: '100%', mb: '0.6rem', borderRadius: '10px' }}
+                    sx={{ width: '100%', mb: '0.6rem', borderRadius: '10px', fontWeight: '700', fontSize: '1rem' }}
                 >{title}
                 </Button>
             </form>
@@ -53,7 +49,7 @@ const Form: FC<IForm> = ({ title, handleClick, handleLoginGoogle, errorEmail, er
             <Button
                 onClick={() => handleLoginGoogle()}
                 variant="outlined"
-                sx={{ width: '100%', mb: '0.8rem', textTransform: 'none', borderRadius: '10px' }}
+                sx={{ width: '100%', mb: '0.8rem', textTransform: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '1rem' }}
                 startIcon={<GoogleIcon />}
             >
                 {title} with Google

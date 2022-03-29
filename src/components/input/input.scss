@@ -1,4 +1,4 @@
-@use "../../scss/variables"as *;
+@use "../../scss/"as *;
 
 input {
     border: 0;
@@ -10,4 +10,9 @@ input {
     color: $txt-color;
     font-family: $font-family;
     width: 100%;
+
+    @include tablet {
+        padding: 1rem 1rem;
+    }
+
 }
