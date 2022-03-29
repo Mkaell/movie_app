@@ -54,7 +54,6 @@ const Header = (props: any) => {
     const { pathname } = useLocation();
 
     const auth = useContext(UserContext);
-    const [user] = useAuthState(auth)
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -102,7 +101,7 @@ const Header = (props: any) => {
                             component="div"
                             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
                         >
-                            <MovieFilterOutlinedIcon fontSize='large' color='primary' />
+                            <MovieFilterOutlinedIcon sx={{ fontSize: '3.5rem' }} color='primary' />
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -114,7 +113,7 @@ const Header = (props: any) => {
                                 onClick={handleOpenNavMenu}
                                 color='primary'
                             >
-                                <MenuIcon />
+                                <MenuIcon sx={{ fontSize: '3.5rem' }} />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -136,8 +135,8 @@ const Header = (props: any) => {
                             >
                                 {
                                     headerNav.map((e, i) => (
-                                        <MenuItem key={i} onClick={handleCloseNavMenu}>
-                                            <Typography className='header-link' textAlign="center" >
+                                        <MenuItem key={i} onClick={handleCloseNavMenu} sx={{ justifyContent: 'center' }}>
+                                            <Typography textAlign="center" >
                                                 <Link to={e.path}>
                                                     {e.display}
                                                 </Link>
@@ -153,14 +152,17 @@ const Header = (props: any) => {
                             component="div"
                             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                         >
-                            <MovieFilterOutlinedIcon fontSize='large' color='primary' />
+                            {
+                                auth.currentUser && <MovieFilterOutlinedIcon sx={{ fontSize: '3.5rem' }} color='primary' />
+                            }
+
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {headerNav.map((page, i) => (
                                 <Button
                                     key={i}
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    className='header-button'
                                 >
                                     <Link to={page.path}>
                                         {page.display}
@@ -171,17 +173,17 @@ const Header = (props: any) => {
 
                         <Box sx={{ flexGrow: 0 }}>
                             {
-                                user ?
+                                auth.currentUser ?
                                     <Tooltip title="Open settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                             <Avatar alt="Remy Sharp" src={`${img}`} />
                                         </IconButton>
                                     </Tooltip> :
                                     pathname === '/registration' ?
-                                        <Box textAlign="center" sx={{ display: 'flex' }}>
+                                        <Box textAlign="center" sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Button
                                                 variant="contained"
-                                                sx={{ my: 2, display: 'block', padding: '0', width: '7rem', height: '2rem' }}
+                                                className='header-button'
                                             >
                                                 <Link to='/registration' style={{ width: '100%' }}>
                                                     Sign up
@@ -189,7 +191,7 @@ const Header = (props: any) => {
                                             </Button>
                                             <Button
                                                 variant="outlined"
-                                                sx={{ my: 2, display: 'block', padding: '0', width: '7rem', height: '2rem' }}
+                                                className='header-button'
                                             >
                                                 <Link to='/login' style={{ width: '100%' }}>
                                                     Log in
@@ -197,10 +199,10 @@ const Header = (props: any) => {
                                             </Button>
                                         </Box>
                                         :
-                                        <Box textAlign="center" sx={{ display: 'flex' }}>
+                                        <Box textAlign="center" sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Button
                                                 variant="outlined"
-                                                sx={{ my: 2, display: 'block', backgroundColor: 'rgba(255, 152, 0, 0.1)', padding: '0', width: '7rem', height: '2rem' }}
+                                                className='header-button'
                                             >
                                                 <Link to='/registration' style={{ width: '100%' }}>
                                                     Sign up
@@ -208,7 +210,7 @@ const Header = (props: any) => {
                                             </Button>
                                             <Button
                                                 variant="contained"
-                                                sx={{ my: 2, display: 'block', padding: '0', width: '7rem', height: '2rem' }}
+                                                className='header-button'
                                             >
                                                 <Link to='/login' style={{ width: '100%' }}>
                                                     Log in
@@ -239,6 +241,7 @@ const Header = (props: any) => {
                                             key={i}
                                             onClick={handleButtonUserMenu}
                                             value={setting}
+                                            className='header-button'
                                         >
                                             {setting}
                                         </Button>

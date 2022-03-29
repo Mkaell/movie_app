@@ -7,6 +7,13 @@
     }
 }
 
+@mixin tabletLandscape {
+    @media (orientation: landscape) and (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+
 @mixin mobile {
     @media only screen and (max-width: $mobile-width) {
         @content;

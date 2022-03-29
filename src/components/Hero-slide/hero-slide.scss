@@ -12,6 +12,10 @@
     background-size: cover;
     background-repeat: no-repeat;
 
+    @include tablet {
+        padding: 12rem 0;
+    }
+
     &::before {
         content: "";
         position: absolute;
@@ -65,7 +69,6 @@
 
             .btns>*~* {
                 margin-left: 1rem;
-                // font-family: $font-family;
             }
 
             .btns,
