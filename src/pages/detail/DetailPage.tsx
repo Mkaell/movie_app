@@ -44,11 +44,6 @@ const DetailPage: FC = () => {
         setOpen(false);
     };
 
-    useEffect(() => {
-        console.log(visibility);
-
-    })
-
     const changeStatesButton = (visibility: boolean, valueModal: string, coloModal: IModalColor, open: boolean) => {
 
         setVisibility(visibility);
@@ -63,10 +58,8 @@ const DetailPage: FC = () => {
 
             if (currentUser) {
                 const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
-                // adding a database when opening
                 const data = await getDoc(docuRef);
 
-                // check if it exists
                 if (!data.exists()) {
                     await setDoc(docuRef, { watchList: [] });
                 }
@@ -204,8 +197,8 @@ const DetailPage: FC = () => {
                                 }
 
                                 {
-                                    item.runtime &&
-                                    <InfoList icon={<ShutterSpeedIcon />} title='Duration: ' info={item.runtime} />
+                                    item.runtime ?
+                                        <InfoList icon={<ShutterSpeedIcon />} title='Duration: ' info={item.runtime + 'm'} /> : null
                                 }
 
                                 {

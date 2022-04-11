@@ -8,10 +8,7 @@ import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
 
 const Navigation = () => {
-    useEffect(() => {
-        console.log('nav');
 
-    })
     return (
         <Routes>
             <Route

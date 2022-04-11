@@ -22,6 +22,7 @@ const outerTheme = createTheme({
 });
 
 const auth = getAuth();
+
 export const UserContext = React.createContext(auth);
 
 

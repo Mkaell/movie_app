@@ -17,8 +17,6 @@
     @include mobile {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
-
-
 }
 
 .movie-search {
@@ -33,6 +31,7 @@
 
     button {
         position: absolute;
+        padding: 7px 16px;
         right: 0;
         font-family: $font-family;
         border: none;
