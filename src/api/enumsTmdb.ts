@@ -1,6 +1,7 @@
 export enum Category {
     movie = 'movie',
-    tv = 'tv'
+    tv = 'tv',
+    recommendations = 'recommendations'
 }
 
 export type CategoryStrings = keyof typeof Category;

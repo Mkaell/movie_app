@@ -1,14 +1,15 @@
 
 import { FC, useContext, useState } from 'react';
-import { AlertModal } from '../components/Alert';
-import { UserContext } from '../App';
+import { AlertModal } from '../../components/Alert';
+import { UserContext } from '../../App';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form } from '../components/Form';
-import { ParticlesBackground } from '../components/Particles';
+import { Form } from '../../components/Form';
+import { ParticlesBackground } from '../../components/Particles';
 
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 import './LoginPage.scss'
+import { NavigationPath } from '../../Routes/enumsNavigation';
 
 
 
@@ -105,7 +106,7 @@ const LoginPage: FC = () => {
                     <p style={{ textAlign: 'center' }}>
                         Don't have an account?
                         <Link
-                            to='/registration'
+                            to={NavigationPath.REGISTRATION}
                             style={{ borderBottom: ' 1px solid #ff9800', padding: '0.5rem' }}>
                             Sign up
                         </Link>

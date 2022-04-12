@@ -27,10 +27,11 @@ const HeroSlide: FC = () => {
             const params = { page: 1 }
             try {
                 const response: any = await tmdbApi.getMoviesList(MovieType.popular, { params });
+
                 setMovieItems(response.results.slice(0, 7));
 
-            } catch {
-                console.log('error');
+            } catch (error: any) {
+                alert(`${error.message}`);
             }
         }
         getMovies();
@@ -42,7 +43,7 @@ const HeroSlide: FC = () => {
                 grabCursor={true}
                 spaceBetween={0}
                 slidesPerView={1}
-            // autoplay={{ delay: 5000 }}
+                autoplay={{ delay: 5000 }}
             >
                 {
                     movieItems.map((item, i) => (
@@ -62,7 +63,7 @@ const HeroSlideItem = (props: any) => {
 
     const { item, className } = props;
     const navigate = useNavigate();
-    // think about optimization
+
     const background = apiConfig.originalImage(item.backdrop_path ? item.backdrop_path : item.poster_path);
 
 
@@ -80,7 +81,7 @@ const HeroSlideItem = (props: any) => {
                     <div className="overview">{item.overview}</div>
                     <div className="btns">
                         <Button
-                            onClick={() => navigate('/movie/' + item.id)}
+                            onClick={() => navigate(`/movie/${item.id}`)}
                             variant="contained"
                             sx={{ my: 2, fontSize: '1.2rem', borderRadius: '10px', fontFamily: 'Raleyway' }}
                         >

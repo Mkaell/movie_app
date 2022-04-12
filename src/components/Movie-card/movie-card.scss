@@ -1,4 +1,4 @@
-@use "../../../scss/"as *;
+@use "../../scss/"as *;
 
 .movie-card {
     position: relative;
@@ -8,6 +8,17 @@
     padding-top: 160%;
     border-radius: $border-radius;
     margin-bottom: 1rem;
+
+    &_descr{
+        @include flex(center, space-between);
+        flex-direction: column;
+        text-align: center;
+    }
+    &_vote{
+        @include flex(center, center);
+        padding: 5px;
+        font-family: 'Roboto';
+    }
 
     .icon-play {
         position: absolute;

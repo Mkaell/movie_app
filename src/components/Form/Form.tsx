@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import GoogleIcon from '@mui/icons-material/Google';
 import { Button } from '@mui/material';
-import { Input } from '../input'
+import { Input } from '../Input'
 import './Form.scss'
 
 interface IForm {

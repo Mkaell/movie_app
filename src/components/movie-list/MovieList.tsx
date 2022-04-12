@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Category } from '../../api/enumsTmdb';
 import tmdbApi from '../../api/apiTmdb';
-import MovieCard from './movie-card/MovieCard';
+import MovieCard from '../Movie-card/MovieCard';
 
 
 import { SwiperSlide, Swiper } from 'swiper/react';
 
 import './movie-list.scss';
+
 
 const MovieList = (props?: any) => {
 
@@ -18,7 +19,7 @@ const MovieList = (props?: any) => {
             let response: any = null;
             const params = {};
 
-            if (props.type !== 'recommendations') {
+            if (props.type !== Category.recommendations) {
                 switch (props.category) {
                     case Category.movie:
                         response = await tmdbApi.getMoviesList(props.type, { params });
@@ -27,7 +28,6 @@ const MovieList = (props?: any) => {
                         response = await tmdbApi.getTvList(props.type, { params });
                 }
             } else {
-
                 response = await tmdbApi.recommendations(props.category, props.id);
                 if (!response.total_pages) {
                     return response

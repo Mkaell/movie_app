@@ -3,9 +3,10 @@ import { Route, Routes } from 'react-router-dom';
 import CatalogPage from '../pages/CatalogPage';
 import DetailPage from '../pages/detail/DetailPage';
 import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/LoginPage';
-import ProfilePage from '../pages/ProfilePage';
+import LoginPage from '../pages/loginPage/LoginPage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
+import { NavigationPath } from './enumsNavigation'
 
 const Navigation = () => {
 
@@ -16,27 +17,27 @@ const Navigation = () => {
                 element={<HomePage />}
             />
             <Route
-                path='/login'
+                path={NavigationPath.LOGIN}
                 element={<LoginPage />}
             />
             <Route
-                path='/registration'
+                path={NavigationPath.REGISTRATION}
                 element={<RegisterPage />}
             />
             <Route
-                path='/profile'
+                path={NavigationPath.PROFILE}
                 element={<ProfilePage />}
             />
             <Route
-                path='/:category'
+                path={NavigationPath.CATEGORY}
                 element={<CatalogPage />}
             />
             <Route
-                path='/:category/search/:keyword'
+                path={NavigationPath.SEARCH}
                 element={<CatalogPage />}
             />
             <Route
-                path='/:category/:id'
+                path={NavigationPath.DETAIL}
                 element={<DetailPage />}
             />
 

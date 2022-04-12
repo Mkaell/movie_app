@@ -1,14 +1,15 @@
 import React, { FC, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import img2 from '../assets/second_icon.png'
-import poster from '../assets/poster.png'
-import { WatchList } from '../components/Watch-list';
-import Loader from '../components/Loader/Loader';
+import img2 from '../../assets/second_icon.png'
+import poster from '../../assets/poster.png'
+import { WatchList } from '../../components/Watch-list';
+import Loader from '../../components/Loader/Loader';
 
 import { useAuthState } from 'react-firebase-hooks/auth'
 
 import './ProfilePage.scss'
-import { UserContext } from '../App';
+import { UserContext } from '../../App';
+import { NavigationPath } from '../../Routes/enumsNavigation';
 
 const ProfilePage: FC = () => {
 
@@ -19,7 +20,7 @@ const ProfilePage: FC = () => {
 
     useEffect(() => {
         if (!user) {
-            navigate('/login')
+            navigate(NavigationPath.LOGIN)
         }
     }, [user, navigate])
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback, FC } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Input } from '../input';
+import { Input } from '../Input';
 import tmdbApi from '../../api/apiTmdb';
 import { Category, MovieType, TvType } from '../../api/enumsTmdb';
 import Loader from '../Loader/Loader';
 
 import { Search } from '@mui/icons-material';
-import MovieCard from '../movie-list/movie-card/MovieCard';
+import MovieCard from '../Movie-card/MovieCard';
 import { Button } from '@mui/material';
 
 import './movie-grid.scss';
@@ -25,12 +25,12 @@ const MovieGrid: FC<IMovieGrid> = (props) => {
 
     const { keyword } = useParams();
 
-
     useEffect(() => {
         const getList = async () => {
             let response: any = null;
-            if (keyword === undefined) {
+            if (!keyword) {
                 const params = {};
+
                 switch (props.category) {
                     case Category.movie:
                         response = await tmdbApi.getMoviesList(MovieType.upcoming, { params });
@@ -53,7 +53,7 @@ const MovieGrid: FC<IMovieGrid> = (props) => {
 
     const loadMore = async () => {
         let response: any = null;
-        if (keyword === undefined) {
+        if (!keyword) {
             const params = {
                 page: page + 1
             };

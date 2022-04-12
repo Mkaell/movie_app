@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react'
-import MovieCard from '../movie-list/movie-card/MovieCard'
+import MovieCard from '../Movie-card/MovieCard'
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { UserContext } from '../../App';
 
@@ -10,9 +10,7 @@ import { db } from '../../firebase'
 const WatchList: FC = () => {
 
     const { currentUser } = useContext(UserContext);
-
     const [items, setItems] = useState<any>([]);
-
 
 
     useEffect(() => {
