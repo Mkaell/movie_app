@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import { Category as cate } from '../api/enumsTmdb';
 import { MovieGrid } from '../components/Movie-grid';
-import { PageHeader } from '../components/Page-header';
+import PageHeader from '../components/page-header/PageHeader';
 
 
 const CatalogPage = () => {
