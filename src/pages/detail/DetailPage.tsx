@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import CastList from './CastList';
 import VideoList from './VideoList';
-import { MovieList } from '../../components/Movie-list';
+
 import Loader from '../../components/Loader/Loader';
 import tmdbApi from '../../api/apiTmdb';
 import apiConfig from '../../api/apiConfig';
@@ -18,6 +18,7 @@ import { db } from '../../firebase'
 
 import './detail.scss';
 import InfoList from './InfoList';
+import MovieList from '../../components/movie-list/MovieList';
 
 type IModalColor = AlertColor | undefined
 
