@@ -10,6 +10,7 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import { UserContext } from '../../App';
 import img from '../../assets/second_icon.png'
 import './header.scss';
+import { NavigationPath } from '../../Routes/enumsNavigation';
 
 
 const settings = ['Profile', 'Logout'];
@@ -76,11 +77,11 @@ const Header = (props: any) => {
 
                 await signOut(auth)
 
-                navigate('/login')
+                navigate(NavigationPath.LOGIN)
             })()
 
         } else {
-            navigate('/profile')
+            navigate(NavigationPath.PROFILE)
         }
         setAnchorElUser(null);
     };
@@ -179,13 +180,13 @@ const Header = (props: any) => {
                                             <Avatar alt="Remy Sharp" src={`${img}`} />
                                         </IconButton>
                                     </Tooltip> :
-                                    pathname === '/registration' ?
+                                    pathname === NavigationPath.REGISTRATION ?
                                         <Box textAlign="center" sx={{ display: 'flex', alignItems: 'center' }}>
                                             <Button
                                                 variant="contained"
                                                 className='header-button'
                                             >
-                                                <Link to='/registration' style={{ width: '100%' }}>
+                                                <Link to={NavigationPath.REGISTRATION} style={{ width: '100%' }}>
                                                     Sign up
                                                 </Link>
                                             </Button>
@@ -193,7 +194,7 @@ const Header = (props: any) => {
                                                 variant="outlined"
                                                 className='header-button'
                                             >
-                                                <Link to='/login' style={{ width: '100%' }}>
+                                                <Link to={NavigationPath.LOGIN} style={{ width: '100%' }}>
                                                     Log in
                                                 </Link>
                                             </Button>
@@ -204,7 +205,7 @@ const Header = (props: any) => {
                                                 variant="outlined"
                                                 className='header-button'
                                             >
-                                                <Link to='/registration' style={{ width: '100%' }}>
+                                                <Link to={NavigationPath.REGISTRATION} style={{ width: '100%' }}>
                                                     Sign up
                                                 </Link>
                                             </Button>
@@ -212,7 +213,7 @@ const Header = (props: any) => {
                                                 variant="contained"
                                                 className='header-button'
                                             >
-                                                <Link to='/login' style={{ width: '100%' }}>
+                                                <Link to={NavigationPath.LOGIN} style={{ width: '100%' }}>
                                                     Log in
                                                 </Link>
                                             </Button>

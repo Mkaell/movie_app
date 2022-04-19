@@ -3,7 +3,7 @@ import './App.scss'
 import 'swiper/swiper.min.css'
 import { BrowserRouter } from 'react-router-dom';
 import Loader from './components/Loader/Loader';
-import Navigation from './config/Navigation';
+import Navigation from './Routes/Navigation';
 import { Header } from './components/Header';
 
 import { createTheme, StyledEngineProvider } from '@mui/material';
@@ -22,6 +22,7 @@ const outerTheme = createTheme({
 });
 
 const auth = getAuth();
+
 export const UserContext = React.createContext(auth);
 
 

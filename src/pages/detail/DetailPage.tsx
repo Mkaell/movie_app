@@ -2,17 +2,14 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import CastList from './CastList';
 import VideoList from './VideoList';
-import MovieList from '../../components/movie-list/MovieList';
+import MovieList from '../../components/Movie-list/MovieList';
 import Loader from '../../components/Loader/Loader';
 import tmdbApi from '../../api/apiTmdb';
 import apiConfig from '../../api/apiConfig';
 import { AlertModal } from '../../components/Alert';
 import { UserContext } from '../../App';
-import InfoList from './InfoList';
 
-import PaidIcon from '@mui/icons-material/Paid';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import ShutterSpeedIcon from '@mui/icons-material/ShutterSpeed';
+
 import { AlertColor, Button } from '@mui/material';
 import { Add, Remove } from '@mui/icons-material';
 
@@ -20,6 +17,7 @@ import { setDoc, doc, updateDoc, arrayUnion, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase'
 
 import './detail.scss';
+import InfoList from './InfoList';
 
 type IModalColor = AlertColor | undefined
 
@@ -44,11 +42,6 @@ const DetailPage: FC = () => {
         setOpen(false);
     };
 
-    useEffect(() => {
-        console.log(visibility);
-
-    })
-
     const changeStatesButton = (visibility: boolean, valueModal: string, coloModal: IModalColor, open: boolean) => {
 
         setVisibility(visibility);
@@ -63,10 +56,8 @@ const DetailPage: FC = () => {
 
             if (currentUser) {
                 const docuRef = doc(db, `${currentUser?.email}/${currentUser?.uid}`);
-                // adding a database when opening
                 const data = await getDoc(docuRef);
 
-                // check if it exists
                 if (!data.exists()) {
                     await setDoc(docuRef, { watchList: [] });
                 }
@@ -75,7 +66,6 @@ const DetailPage: FC = () => {
             const response: any = await tmdbApi.detail(category, id, { params: {} });
             setItem(response);
             window.scrollTo(0, 0);
-
         }
 
         getDetail();
@@ -101,12 +91,10 @@ const DetailPage: FC = () => {
                 } else {
                     setVisibility(true)
                 }
-
             } catch (error) {
                 console.error("Error: ", error);
             }
         }
-
         isMovieInWatchList();
 
     }, [id])
@@ -197,37 +185,7 @@ const DetailPage: FC = () => {
                                             </Button>
                                         : null
                                 }
-
-                                {
-                                    item.release_date &&
-                                    <InfoList icon={<DateRangeIcon />} title='Release date: ' info={item.release_date} />
-                                }
-
-                                {
-                                    item.runtime &&
-                                    <InfoList icon={<ShutterSpeedIcon />} title='Duration: ' info={item.runtime} />
-                                }
-
-                                {
-                                    item.budget ?
-                                        <InfoList icon={<PaidIcon />} title='Budget: $' info={item.budget.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")} /> : null
-                                }
-
-                                {
-                                    item.first_air_date && item.last_air_date ?
-                                        <InfoList icon={<DateRangeIcon />} info={`${item.first_air_date} - ${item.last_air_date}`} /> : null
-                                }
-
-                                {
-                                    item.number_of_episodes &&
-                                    <InfoList title='Number of episodes: ' info={item.number_of_episodes} />
-                                }
-
-                                {
-                                    item.number_of_seasons &&
-                                    <InfoList title='Number of seasons: ' info={item.number_of_seasons} />
-                                }
-
+                                <InfoList item={item} />
                                 <div className="cast">
                                     <div className="section__header">
                                         <h2>Casts</h2>

@@ -5,9 +5,10 @@ import { ParticlesBackground } from '../components/Particles';
 
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-import './LoginPage.scss'
+import './loginPage/LoginPage.scss'
 import { AlertModal } from '../components/Alert';
 import { UserContext } from '../App';
+import { NavigationPath } from '../Routes/enumsNavigation';
 
 const RegisterPage: FC = () => {
 
@@ -88,7 +89,7 @@ const RegisterPage: FC = () => {
                     <p style={{ textAlign: 'center' }}>
                         Already have account?
                         <Link
-                            to='/login'
+                            to={NavigationPath.LOGIN}
                             style={{ borderBottom: ' 1px solid #ff9800', padding: '0.5rem' }}>
                             Log in
                         </Link>

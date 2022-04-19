@@ -1,8 +1,16 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-test('renders learn react link', () => {
-  // render(<App />);
+import App from './App'
 
-});
+
+describe('Header component', () => {
+
+    it('renders Header component', () => {
+
+        // render(<App />);
+        // screen.debug();
+        // expect(screen.getByText(/Home/i)).toBeInTheDocument();
+
+    });
+})
