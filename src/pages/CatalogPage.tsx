@@ -1,10 +1,10 @@
 import React from 'react'
 import { useParams } from 'react-router';
 
-import PageHeader from '../components/Page-header/PageHeader';
+import { PageHeader } from '../components/Page-header';
 
 import { Category as cate } from '../api/enumsTmdb';
-import MovieGrid from '../components/Movie-grid/MovieGrid';
+import { MovieGrid } from '../components/Movie-grid';
 
 
 const CatalogPage = () => {

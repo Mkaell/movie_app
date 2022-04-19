@@ -7,7 +7,7 @@ import { Category, MovieType, TvType } from '../../api/enumsTmdb';
 import Loader from '../Loader/Loader';
 
 import { Search } from '@mui/icons-material';
-import MovieCard from '../Movie-card/MovieCard';
+import { MovieCard } from '../Movie-card';
 import { Button } from '@mui/material';
 
 import './movie-grid.scss';

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Category } from '../../api/enumsTmdb';
 import tmdbApi from '../../api/apiTmdb';
-import MovieCard from '../Movie-card/MovieCard';
-
+import { MovieCard } from '../Movie-card';
 
 import { SwiperSlide, Swiper } from 'swiper/react';
 
 import './movie-list.scss';
+
 
 
 const MovieList = (props?: any) => {

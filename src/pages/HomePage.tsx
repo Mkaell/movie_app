@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
-import MovieList from '../components/Movie-list/MovieList'
+import { MovieList } from '../components/Movie-list'
 import { Category, MovieType, TvType } from '../api/enumsTmdb'
 import { Footer } from '../components/Footer'
 import { HeroSlide } from '../components/Hero-slide'
