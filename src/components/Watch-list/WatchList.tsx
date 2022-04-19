@@ -1,11 +1,10 @@
 import React, { FC, useContext, useEffect, useState } from 'react'
-import { MovieCard } from '../Movie-card';
+import MovieCard from '../movie-card/MovieCard';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import { UserContext } from '../../App';
 
 import { doc, getDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
-
 
 
 const WatchList: FC = () => {
