@@ -1,4 +1,4 @@
-# [Movie_app](https://mkaell.github.io/Pulse/dist/](https://movie-1hwv2eynh-mrohacevich-yandexby.vercel.app/)
+# [Movie_app](https://movie-1hwv2eynh-mrohacevich-yandexby.vercel.app/)
 
 ### _Technologies used:_ 
 - Application wrote with **React** / **Typescript**.
